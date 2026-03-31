@@ -1,20 +1,4 @@
-version: '3.8'
-
 services:
-  # PostgreSQL service
-  db:
-    image: postgis/postgis
-    container_name: warehub-db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-    volumes:
-      - ./data/postgist:/var/lib/postgresql/data
-    ports:
-      - "5443:5432"
-
-  # Redis service
   redis:
     image: redis:6-alpine
     container_name: warehub-redis
@@ -24,20 +8,31 @@ services:
       - redis_data:/data
 
   backend-app:
-    container_name: backend-appd
+    container_name: warehub-backend
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
       - .env
-    ports:
-      - 8080:8080
+    expose:
+      - "8080"
+    depends_on:
+      - db
+      - redis
 
-# Volumes to persist data
+  nginx:
+    image: nginx:alpine
+    container_name: warehub-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend-app
+
 volumes:
-  postgres_data:
-    driver: local
   redis_data:
-    driver: local
 
 name: warehub
