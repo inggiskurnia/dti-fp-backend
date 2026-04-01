@@ -14,21 +14,10 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    expose:
-      - "8080"
+    ports:
+      - "127.0.0.1:8080:8080"
     depends_on:
       - redis
-
-  nginx:
-    image: nginx:alpine
-    container_name: warehub-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d/warehub-backend.conf:/etc/nginx/conf.d/warehub-backend.conf:ro
-    depends_on:
-      - backend-app
 
 volumes:
   redis_data:
