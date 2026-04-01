@@ -17,7 +17,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - redis
+      - warehub-redis
 
   nginx:
     image: nginx:alpine
@@ -29,7 +29,7 @@ services:
       - ./nginx/warehub-backend.conf:/etc/nginx/conf.d/warehub-backend.conf:ro
       - ./ssl:/etc/nginx/ssl:ro
     depends_on:
-      - backend-app
+      - warehub-backend
 
 volumes:
   redis_data:
