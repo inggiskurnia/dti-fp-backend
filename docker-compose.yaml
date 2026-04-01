@@ -26,8 +26,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/warehub-backend.conf:/etc/nginx/conf.d/warehub-backend.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
+      - ./nginx/conf.d/warehub-backend.conf:/etc/nginx/conf.d/warehub-backend.conf:ro
     depends_on:
       - backend-app
 
