@@ -15,11 +15,17 @@ public class CorsConfigurationSourceImpl implements CorsConfigurationSource {
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type", "Application"));
-        corsConfiguration.setAllowedOriginPatterns(List.of("http://localhost:3001", "http://localhost:3000",
-                "http://0.0.0.0:3000", "http://host.docker.internal:3000", "https://warehubbb.vercel.app/", "https://*.vercel.app/"));
+        corsConfiguration.setAllowedOrigins(List.of(
+                "https://warehub.iktrisiawan.com",
+                "http://localhost:3001",
+                "http://localhost:3000",
+                "http://0.0.0.0:3000",
+                "http://host.docker.internal:3000",
+                "https://warehubbb.vercel.app"
+        ));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setExposedHeaders(List.of("Authorization", "Access-Control-Origin", "Access-Control-Allow-Credentials"));
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
         return corsConfiguration;
     }
