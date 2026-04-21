@@ -1,11 +1,13 @@
 services:
   redis:
     image: redis:6-alpine
-    container_name: warehub-redis
+    container_name: redis-db
     expose:
       - "6379"
     volumes:
       - redis_data:/data
+    networks:
+      - shared-services
 
   backend-app:
     container_name: warehub-backend
@@ -21,5 +23,9 @@ services:
 
 volumes:
   redis_data:
+
+networks:
+  shared-services:
+    name: shared-services
 
 name: warehub
