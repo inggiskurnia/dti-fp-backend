@@ -20,6 +20,8 @@ services:
       - "127.0.0.1:8080:8080"
     depends_on:
       - redis
+    networks:
+      - shared-services
 
 volumes:
   redis_data:
@@ -27,5 +29,6 @@ volumes:
 networks:
   shared-services:
     name: shared-services
+    external: true
 
 name: warehub
